@@ -11,6 +11,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const inputUsername = document.querySelector(".username");
 const inputPassword = document.querySelector(".password");
 const loginBtn = document.querySelector("#loginBtn");
+const goToRegister = document.querySelector("#goToRegister");
+const loginVisuals = document.querySelector("#loginVisuals");
+function typeOutParagraph(text, element) {
+    let index = 0;
+    function typeNextLetter() {
+        element.textContent += text[index];
+        index++;
+        if (index < text.length) {
+            setTimeout(typeNextLetter, 100); // Delay between each letter in milliseconds
+        }
+    }
+    typeNextLetter();
+}
+const paragraph = document.createElement('p');
+loginVisuals.append(paragraph);
+(function startingAnimationFrontPage() {
+    typeOutParagraph("my day was perfect..", paragraph);
+    var sun = document.createElement("div");
+    sun.id = "sun";
+    sun.style.width = "150px";
+    sun.style.height = "150px";
+    sun.style.borderRadius = "50%";
+    sun.style.backgroundColor = "yellow";
+    sun.style.boxShadow = "0 0 50px 10px yellow";
+    sun.style.position = "absolute";
+    sun.style.bottom = "-100px"; // start off-screen at the bottom
+    sun.style.left = "50px";
+    loginVisuals.appendChild(sun);
+    // Move the sun up
+    var currentPosition = -100;
+    var moveInterval = setInterval(function () {
+        currentPosition++;
+        sun.style.bottom = currentPosition + "px";
+        if (currentPosition >= 350) {
+            clearInterval(moveInterval);
+        }
+    }, 10);
+})();
 const logIn = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield fetch("http://localhost:3000/api/users/login", {
@@ -30,4 +68,8 @@ const logIn = () => __awaiter(void 0, void 0, void 0, function* () {
         console.error(error);
     }
 });
-loginBtn === null || loginBtn === void 0 ? void 0 : loginBtn.addEventListener("click", logIn);
+goToRegister.addEventListener("click", () => {
+    window.location.href = "register.html";
+});
+loginBtn.addEventListener("click", logIn);
+/*************REGISTER FETCH N LOGIC*******************/
