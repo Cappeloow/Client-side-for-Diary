@@ -13,7 +13,8 @@ function typeOutParagraph(text: string, element: HTMLElement) {
 
     if (index < text.length) {
       setTimeout(typeNextLetter,  100); // Delay between each letter in milliseconds
-    }
+    } 
+
   }
 
   typeNextLetter();
@@ -28,14 +29,14 @@ loginVisuals.append(paragraph);
 var sun = document.createElement("div");
 sun.id ="sun"
 
-sun.style.width = "150px";
-sun.style.height = "150px";
+sun.style.width = "160px";
+sun.style.height = "160px";
 sun.style.borderRadius = "50%";
 sun.style.backgroundColor = "yellow";
 sun.style.boxShadow = "0 0 50px 10px yellow";
 sun.style.position = "absolute";
 sun.style.bottom = "-100px"; // start off-screen at the bottom
-sun.style.left ="50px";
+sun.style.left ="250px";
 
 
 loginVisuals.appendChild(sun);
@@ -45,7 +46,7 @@ var currentPosition = -100;
 var moveInterval = setInterval(function() {
   currentPosition++;
   sun.style.bottom = currentPosition + "px";
-  if (currentPosition >= 350) {
+  if (currentPosition >= 500) {
     clearInterval(moveInterval);
   }
 }, 10);
@@ -67,7 +68,11 @@ const logIn = async () => {
           })
         });
         const data = await response.json();
-        localStorage.setItem("user", data)
+        console.log(data.username);
+        if (data.username){
+          window.location.href ="mystory.html";
+        }
+        localStorage.setItem("user", JSON.stringify(data));
       } catch (error) {
         console.error(error);
       }
