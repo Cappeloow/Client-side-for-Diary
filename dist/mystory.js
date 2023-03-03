@@ -15,7 +15,7 @@ const startingPhrase = () => {
         let parsedUser = JSON.parse(user);
         const paragraphWelcomeUser = document.createElement("p");
         parsedUser.name = parsedUser.username.split('@')[0];
-        paragraphWelcomeUser.innerText = `${parsedUser.name}`;
+        paragraphWelcomeUser.innerText = `logged in as: ${parsedUser.name}`;
         sideBar.appendChild(paragraphWelcomeUser);
         return parsedUser;
     }
