@@ -49,6 +49,7 @@ const createPostsToDatabase = () => __awaiter(void 0, void 0, void 0, function* 
         titleInput.value = "";
         contentInput.value = "";
         console.log(data);
+        getAllPosts();
         if (!response.ok) {
             throw new Error('Request failed');
         }
