@@ -75,7 +75,10 @@ console.log(allPosts);
 const getAllPosts = () => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield fetch("http://localhost:3000/api/post/public");
     const data = yield response.json();
-    data.forEach((post) => {
+    const sortedData = data.sort((a, b) => a.lastActiveAt - b.lastActiveAt);
+    console.log(data);
+    console.log(sortedData); //Somehow it doesnt sort my array by date.
+    sortedData.forEach((post) => {
         displayPost(post);
     });
 });

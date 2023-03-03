@@ -265,17 +265,20 @@ border-top:1px solid black;
         align-items: center;
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
-        border-color:rgb(157, 175, 191);
+        border-color:rgb(1, 8, 13);
     }
     .containerOfSearch > button {
         width:20px;
         height:44px;
-        border-color:rgb(157, 175, 191);
+        border-color:rgb(1, 2, 3);
         border-right:none;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
     }
 
+    .containerOfSearch > button:hover {
+        background-color: azure;
+    }
 /************allPosts****************/
 
 
