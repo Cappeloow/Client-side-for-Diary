@@ -90,6 +90,7 @@ const response = await fetch("http://localhost:3000/api/post/public");
 const data = await response.json();
 const sortedData =data.sort((a: { lastActiveAt: number; }, b: { lastActiveAt: number; }) => a.lastActiveAt - b.lastActiveAt);
 console.log(data);
+sortedData.reverse();
 console.log(sortedData); //Somehow it doesnt sort my array by date.
 sortedData.forEach((post:Post) => {
   displayPost(post);
