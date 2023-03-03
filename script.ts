@@ -29,19 +29,12 @@ loginVisuals.append(paragraph);
 var sun = document.createElement("div");
 sun.id ="sun"
 
-sun.style.width = "160px";
-sun.style.height = "160px";
-sun.style.borderRadius = "50%";
-sun.style.backgroundColor = "yellow";
-sun.style.boxShadow = "0 0 50px 10px yellow";
-sun.style.position = "absolute";
-sun.style.bottom = "-100px"; // start off-screen at the bottom
-sun.style.left ="250px";
+
+
 
 
 loginVisuals.appendChild(sun);
 
-// Move the sun up
 var currentPosition = -100;
 var moveInterval = setInterval(function() {
   currentPosition++;
