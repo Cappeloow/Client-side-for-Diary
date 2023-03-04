@@ -290,11 +290,21 @@ border-top:1px solid black;
     align-items: center;
 }
 .post {
-    width:60%;
-    border: 1px solid black;
+    width:80%;
+    border: 1px solid rgb(194, 224, 237);
     padding:20px;
     margin:20px;
 }
-.post > h2 {
-font-size:20px;
+.post > h3 {
+font-size:30px;
+text-align: center;
+}
+.post > #usernameP {
+    font-size:12px;
+    font-style: oblique;
+}
+.post > #contentP {
+    font-size:15px;
+    padding:20px;
+    text-align: center;
 }

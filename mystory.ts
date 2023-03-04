@@ -74,9 +74,9 @@ const allPosts = document.querySelector(".allPosts") as HTMLDivElement;
 const displayPost = (post:Post) => {
   const postTemplate = `
   <div class="post">
-    <h2>${post.user}</h2>
-    <h3>${post.title}</h3>
-    <p>${post.content}</p>
+  <h3>${post.title}</h3>
+    <p id="usernameP">@${post.user}</p>
+    <p id="contentP">${post.content}</p>
   </div>
   `
   allPosts.insertAdjacentHTML('beforeend',postTemplate);
