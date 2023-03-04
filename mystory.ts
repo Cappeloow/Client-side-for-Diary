@@ -101,3 +101,32 @@ sortedData.forEach((post:Post) => {
 
 
 getAllPosts();
+
+
+/*************SEARCH BY NAME INPUT FIELD***********************/
+/**we want to search for a "user" if found we want to to change div to 
+  a div about the specific user**/
+
+const inputSearcher = document.querySelector(".searchBar") as HTMLInputElement;
+const submitSearch = document.querySelector('.searchBtn') as HTMLButtonElement;
+const fetchSearchUser = async () => {
+  try {
+    const response = await fetch("http://localhost:3000/api/post/search", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user:inputSearcher.value
+      })
+    });
+    const data = await response.json();
+    console.group(data);
+    
+
+  } catch (error:any) {
+ 
+  }
+}
+
+submitSearch.addEventListener("click",fetchSearchUser);

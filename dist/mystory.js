@@ -84,3 +84,26 @@ const getAllPosts = () => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 getAllPosts();
+/*************SEARCH BY NAME INPUT FIELD***********************/
+/**we want to search for a "user" if found we want to to change div to
+  a div about the specific user**/
+const inputSearcher = document.querySelector(".searchBar");
+const submitSearch = document.querySelector('.searchBtn');
+const fetchSearchUser = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield fetch("http://localhost:3000/api/post/search", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: inputSearcher.value
+            })
+        });
+        const data = yield response.json();
+        console.group(data);
+    }
+    catch (error) {
+    }
+});
+submitSearch.addEventListener("click", fetchSearchUser);
