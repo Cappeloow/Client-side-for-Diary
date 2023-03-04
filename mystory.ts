@@ -122,10 +122,15 @@ const fetchSearchUser = async () => {
     });
     const data = await response.json();
     console.group(data);
+    data.forEach((post:Post) => {
+      displayPost(post);
+    });
+    if(!data){
+      return;
+    }
     
-
   } catch (error:any) {
- 
+    console.log(error);
   }
 }
 

@@ -102,8 +102,15 @@ const fetchSearchUser = () => __awaiter(void 0, void 0, void 0, function* () {
         });
         const data = yield response.json();
         console.group(data);
+        data.forEach((post) => {
+            displayPost(post);
+        });
+        if (!data) {
+            return;
+        }
     }
     catch (error) {
+        console.log(error);
     }
 });
 submitSearch.addEventListener("click", fetchSearchUser);
