@@ -61,14 +61,28 @@ const createPostsToDatabase = () => __awaiter(void 0, void 0, void 0, function* 
 submitPost.addEventListener("click", createPostsToDatabase);
 const allPosts = document.querySelector(".allPosts");
 const displayPost = (post) => {
+    const postId = `post-${Math.random().toString(36).substring(7)}`;
     const postTemplate = `
-  <div class="post">
-  <h3>${post.title}</h3>
-    <p id="usernameP">@${post.user}</p>
-    <p id="contentP">${post.content}</p>
-  </div>
+    <div class="post" id="${postId}">
+      <h3>${post.title}</h3>
+      <p class="usernameP">@${post.user}</p>
+      <p class="contentP">${post.content}</p>
+    </div>
   `;
     allPosts.insertAdjacentHTML('beforeend', postTemplate);
+    const usernameP = document.querySelector(`#${postId} .usernameP`);
+    if (usernameP) {
+        usernameP.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
+            allPosts.innerHTML = "";
+            const data = yield fetchSearchUser(post.user);
+            if (!data) {
+                return;
+            }
+            data.forEach((post) => {
+                displayPost(post);
+            });
+        }));
+    }
 };
 /***************FETCH ALL USER POSTS*********************/
 console.log(allPosts);
@@ -89,7 +103,7 @@ getAllPosts();
   a div about the specific user**/
 const inputSearcher = document.querySelector(".searchBar");
 const submitSearch = document.querySelector('.searchBtn');
-const fetchSearchUser = () => __awaiter(void 0, void 0, void 0, function* () {
+const fetchSearchUser = (name) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield fetch("http://localhost:3000/api/post/search", {
             method: 'POST',
@@ -97,20 +111,27 @@ const fetchSearchUser = () => __awaiter(void 0, void 0, void 0, function* () {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                user: inputSearcher.value
+                user: name
             })
         });
         const data = yield response.json();
         console.group(data);
-        data.forEach((post) => {
-            displayPost(post);
-        });
         if (!data) {
             return;
         }
+        return data;
     }
     catch (error) {
         console.log(error);
     }
 });
-submitSearch.addEventListener("click", fetchSearchUser);
+submitSearch.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+    allPosts.innerHTML = "";
+    const data = yield fetchSearchUser(inputSearcher.value);
+    if (!data) {
+        return;
+    }
+    data.forEach((post) => {
+        displayPost(post);
+    });
+}));

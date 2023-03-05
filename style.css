@@ -305,11 +305,15 @@ font-size:25px;
 text-align: center;
 padding:20px;
 }
-.post > #usernameP {
+.post > .usernameP {
     font-size:12px;
     font-style: oblique;
 }
-.post > #contentP {
+.post > .usernameP:hover {
+    color:rgba(7, 20, 20, 0.562);
+    cursor:pointer
+}
+.post > .contentP {
     font-size:15px;
     padding:20px;
     text-align: center;

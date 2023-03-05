@@ -71,16 +71,31 @@ type Post = {
 const allPosts = document.querySelector(".allPosts") as HTMLDivElement;
 
 
-const displayPost = (post:Post) => {
+const displayPost = (post: Post) => {
+  const postId = `post-${Math.random().toString(36).substring(7)}`;
   const postTemplate = `
-  <div class="post">
-  <h3>${post.title}</h3>
-    <p id="usernameP">@${post.user}</p>
-    <p id="contentP">${post.content}</p>
-  </div>
-  `
-  allPosts.insertAdjacentHTML('beforeend',postTemplate);
-}
+    <div class="post" id="${postId}">
+      <h3>${post.title}</h3>
+      <p class="usernameP">@${post.user}</p>
+      <p class="contentP">${post.content}</p>
+    </div>
+  `;
+  allPosts.insertAdjacentHTML('beforeend', postTemplate);
+
+  const usernameP = document.querySelector(`#${postId} .usernameP`);
+  if (usernameP) {
+    usernameP.addEventListener('click', async () => {
+      allPosts.innerHTML="";
+      const data = await fetchSearchUser(post.user);  
+      if(!data){
+        return;
+      }
+      data.forEach((post:Post) => {
+        displayPost(post);
+      });
+    });
+  }
+};
 
 /***************FETCH ALL USER POSTS*********************/
 console.log(allPosts);
@@ -109,7 +124,7 @@ getAllPosts();
 
 const inputSearcher = document.querySelector(".searchBar") as HTMLInputElement;
 const submitSearch = document.querySelector('.searchBtn') as HTMLButtonElement;
-const fetchSearchUser = async () => {
+const fetchSearchUser = async (name:string):Promise <Post[] |void> => {
   try {
     const response = await fetch("http://localhost:3000/api/post/search", {
       method: 'POST',
@@ -117,21 +132,33 @@ const fetchSearchUser = async () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user:inputSearcher.value
+        user:name
       })
     });
     const data = await response.json();
     console.group(data);
-    data.forEach((post:Post) => {
-      displayPost(post);
-    });
     if(!data){
       return;
     }
-    
+    return data;
   } catch (error:any) {
     console.log(error);
   }
 }
 
-submitSearch.addEventListener("click",fetchSearchUser);
+
+submitSearch.addEventListener("click", async () => {
+  allPosts.innerHTML="";
+  const data = await fetchSearchUser(inputSearcher.value);  
+  if(!data){
+    return;
+  }
+  data.forEach((post:Post) => {
+    displayPost(post);
+  });
+});
+
+
+
+
+
