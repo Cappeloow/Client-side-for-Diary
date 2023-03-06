@@ -30,6 +30,7 @@ const submitPost = document.querySelector(".submitPost") as HTMLButtonElement;
 
 
 const createPostsToDatabase = async () => {
+  console.log('createPostsToDatabase called');
   if (!LoggedUser) {
     throw new Error('User is not logged in');
   }
@@ -50,17 +51,16 @@ const createPostsToDatabase = async () => {
     titleInput.value="";
     contentInput.value="";
     console.log(data);
-    getAllPosts();
+    await getAllPosts();
+    window.location.href ="mystory.html"; //fattar inte varför inte getAllPosts inte funkar tho.
+    console.log('getAllPosts called');
     if (!response.ok) {
       throw new Error('Request failed');
     }
   } catch (error) {
     console.log(error);
   }
- 
 }
-
-
 submitPost.addEventListener("click",createPostsToDatabase);
 
 type Post = {
@@ -101,21 +101,29 @@ const displayPost = (post: Post) => {
 console.log(allPosts);
 
 const getAllPosts = async () => {
-const response = await fetch("http://localhost:3000/api/post/public");
-const data = await response.json();
+  console.log('getAllPosts called');
+  try {
+    const response = await fetch("http://localhost:3000/api/post/public");
+    console.log('response', response);
+    const data = await response.json();
+    console.log('data', data);
+    const sortedData = await sortArrayByDate(data);
+    console.log('sortedData', sortedData);
+    sortedData.forEach((post:Post) => {
+      displayPost(post);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+getAllPosts();
+
+const sortArrayByDate = async (data: any[]):Promise<Post[]> => {
 const sortedData =data.sort((a: { lastActiveAt: number; }, b: { lastActiveAt: number; }) => a.lastActiveAt - b.lastActiveAt);
 console.log(data);
 sortedData.reverse();
-console.log(sortedData); //Somehow it doesnt sort my array by date.
-sortedData.forEach((post:Post) => {
-  displayPost(post);
-});
-
-
-};
-
-
-getAllPosts();
+return sortedData;
+}
 
 
 /*************SEARCH BY NAME INPUT FIELD***********************/

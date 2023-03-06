@@ -30,6 +30,7 @@ const contentInput = document.querySelector(".contentInput");
 const titleInput = document.querySelector(".titleInput");
 const submitPost = document.querySelector(".submitPost");
 const createPostsToDatabase = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('createPostsToDatabase called');
     if (!LoggedUser) {
         throw new Error('User is not logged in');
     }
@@ -49,7 +50,9 @@ const createPostsToDatabase = () => __awaiter(void 0, void 0, void 0, function* 
         titleInput.value = "";
         contentInput.value = "";
         console.log(data);
-        getAllPosts();
+        yield getAllPosts();
+        window.location.href = "mystory.html"; //fattar inte varför inte getAllPosts inte funkar tho.
+        console.log('getAllPosts called');
         if (!response.ok) {
             throw new Error('Request failed');
         }
@@ -87,17 +90,29 @@ const displayPost = (post) => {
 /***************FETCH ALL USER POSTS*********************/
 console.log(allPosts);
 const getAllPosts = () => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield fetch("http://localhost:3000/api/post/public");
-    const data = yield response.json();
+    console.log('getAllPosts called');
+    try {
+        const response = yield fetch("http://localhost:3000/api/post/public");
+        console.log('response', response);
+        const data = yield response.json();
+        console.log('data', data);
+        const sortedData = yield sortArrayByDate(data);
+        console.log('sortedData', sortedData);
+        sortedData.forEach((post) => {
+            displayPost(post);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+getAllPosts();
+const sortArrayByDate = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const sortedData = data.sort((a, b) => a.lastActiveAt - b.lastActiveAt);
     console.log(data);
     sortedData.reverse();
-    console.log(sortedData); //Somehow it doesnt sort my array by date.
-    sortedData.forEach((post) => {
-        displayPost(post);
-    });
+    return sortedData;
 });
-getAllPosts();
 /*************SEARCH BY NAME INPUT FIELD***********************/
 /**we want to search for a "user" if found we want to to change div to
   a div about the specific user**/
