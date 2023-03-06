@@ -1,4 +1,6 @@
 const sideBar = document.querySelector(".sidebar") as HTMLDivElement;
+const refreshIcon = document.querySelector("#refreshIcon") as HTMLHeadElement;
+
 
 type User ={
   _id:string,
@@ -52,8 +54,8 @@ const createPostsToDatabase = async () => {
     contentInput.value="";
     console.log(data);
     await getAllPosts();
-    window.location.href ="mystory.html"; //fattar inte varför inte getAllPosts inte funkar tho.
-    console.log('getAllPosts called');
+    // window.location.href ="mystory.html"; //fattar inte varför inte getAllPosts inte funkar tho.
+    // console.log('getAllPosts called');
     if (!response.ok) {
       throw new Error('Request failed');
     }
@@ -101,14 +103,12 @@ const displayPost = (post: Post) => {
 console.log(allPosts);
 
 const getAllPosts = async () => {
+  allPosts.innerHTML="";
   console.log('getAllPosts called');
   try {
     const response = await fetch("http://localhost:3000/api/post/public");
-    console.log('response', response);
     const data = await response.json();
-    console.log('data', data);
     const sortedData = await sortArrayByDate(data);
-    console.log('sortedData', sortedData);
     sortedData.forEach((post:Post) => {
       displayPost(post);
     });
@@ -125,7 +125,10 @@ sortedData.reverse();
 return sortedData;
 }
 
+refreshIcon.addEventListener("click", async () => {
 
+await getAllPosts();
+});
 /*************SEARCH BY NAME INPUT FIELD***********************/
 /**we want to search for a "user" if found we want to to change div to 
   a div about the specific user**/

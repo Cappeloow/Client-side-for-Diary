@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const sideBar = document.querySelector(".sidebar");
+const refreshIcon = document.querySelector("#refreshIcon");
 const startingPhrase = () => {
     let user = localStorage.getItem("user");
     if (user !== null) {
@@ -51,8 +52,8 @@ const createPostsToDatabase = () => __awaiter(void 0, void 0, void 0, function* 
         contentInput.value = "";
         console.log(data);
         yield getAllPosts();
-        window.location.href = "mystory.html"; //fattar inte varför inte getAllPosts inte funkar tho.
-        console.log('getAllPosts called');
+        // window.location.href ="mystory.html"; //fattar inte varför inte getAllPosts inte funkar tho.
+        // console.log('getAllPosts called');
         if (!response.ok) {
             throw new Error('Request failed');
         }
@@ -90,14 +91,12 @@ const displayPost = (post) => {
 /***************FETCH ALL USER POSTS*********************/
 console.log(allPosts);
 const getAllPosts = () => __awaiter(void 0, void 0, void 0, function* () {
+    allPosts.innerHTML = "";
     console.log('getAllPosts called');
     try {
         const response = yield fetch("http://localhost:3000/api/post/public");
-        console.log('response', response);
         const data = yield response.json();
-        console.log('data', data);
         const sortedData = yield sortArrayByDate(data);
-        console.log('sortedData', sortedData);
         sortedData.forEach((post) => {
             displayPost(post);
         });
@@ -113,6 +112,9 @@ const sortArrayByDate = (data) => __awaiter(void 0, void 0, void 0, function* ()
     sortedData.reverse();
     return sortedData;
 });
+refreshIcon.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+    yield getAllPosts();
+}));
 /*************SEARCH BY NAME INPUT FIELD***********************/
 /**we want to search for a "user" if found we want to to change div to
   a div about the specific user**/
