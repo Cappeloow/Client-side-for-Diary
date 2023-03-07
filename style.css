@@ -226,7 +226,8 @@ border-top:1px solid black;
 
 .posts > .containerOfInputs > .circleAroundInputs> .titleInput{
     width:38%;
-    margin-right:150px;
+    align-self: self-start;
+    margin-left:20%;
     height:35px;
     border-color: aliceblue;
     border-top-right-radius: 10px;
@@ -311,7 +312,13 @@ border-top:1px solid black;
 .PostDiv:hover {
     border: 1px solid rgb(151, 178, 189); 
     background-color: white;
-    width:81%;
+}
+.PostDiv > .deleteP {
+    cursor:pointer;
+    font-size:20px;
+}
+.deleteP:hover{
+    color:rgba(2, 1, 0, 0.656);
 }
 .PostDiv > h3 {
 font-size:25px;
