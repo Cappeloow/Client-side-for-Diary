@@ -32,6 +32,7 @@ header{
     letter-spacing: 15px;
     font-family: 'Mynerve', cursive;
     z-index:1;
+    color:#0d0d0d;
 }
 
 #loginVisuals > p {
@@ -118,6 +119,7 @@ align-items: center;
     letter-spacing:10px;
     font-size:40px;
     padding:30px;
+    color:#0d0d0d;
 }
 
 
@@ -164,6 +166,7 @@ position:fixed;
 left:0;
 }
 .sidebar > h1 {
+    color:#0d0d0d;
     font-size:15px;
     letter-spacing: 5px;
     font-family: 'Mynerve', cursive; 
@@ -186,21 +189,23 @@ border-top:1px solid black;
 }
 
 /******CONTAINERS_INPUTS*****/
+
 .posts> .containerOfInputs{
     padding:20px;
     padding-top:60px;
     display:Flex;
     align-items: center;
     justify-content: center;
-    background-color:rgba(0, 0, 0, 0.03);
+    background-color:#eff0f3
 }
 #createANewPost {
     box-shadow:2px 2px 4px 4px black;
     padding:20px;
     letter-spacing: 10px;
+    background-color: #ff8e3c;
 }
 #createANewPost:hover {
-    background-color: rgb(255, 255, 255);
+    background-color: #ff8d3cc4;
     cursor:pointer;
     transition:1s;
 }
@@ -264,6 +269,7 @@ border-top:1px solid black;
         font-family: 'Special Elite', cursive;
         font-size:20px;
         text-align:center;
+        color:#0d0d0d;
         padding:10px;
         opacity: 0.8;
         border-top:1px solid black;
@@ -275,14 +281,14 @@ border-top:1px solid black;
         width:80%;
         height:10px;
         align-items: center;
+        border:2px solid #ff8e3c;
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
-        border-color:rgb(21, 108, 171);
     }
     .containerOfSearch > button {
         width:20px;
         height:44px;
-        border-color:rgb(21, 108, 171);
+        border:2px solid #ff8e3c;
         border-right:none;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
@@ -301,7 +307,7 @@ border-top:1px solid black;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color:rgba(0, 0, 0, 0.03);
+    background-color:#eff0f3
 }
 .PostDiv {
     width:80%;

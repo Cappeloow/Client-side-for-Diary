@@ -83,13 +83,13 @@ const displayPost = (post) => {
   `;
     allPosts.insertAdjacentHTML('beforeend', postTemplate);
     const deleteP = document.querySelector(`#${postId} .deleteP`);
+    const yes = document.createElement("p");
+    const no = document.createElement("p");
+    const yesOrNo = document.createElement("div");
     if (deleteP) {
         deleteP.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
-            const yesOrNo = document.createElement("div");
             yesOrNo.id = "yesOrNo";
             yesOrNo.innerText = "Are you sure you want to remove this post?";
-            const yes = document.createElement("p");
-            const no = document.createElement("p");
             yes.innerText = "yes";
             no.innerText = "no";
             yesOrNo.append(yes, no);
@@ -148,6 +148,7 @@ refreshIcon.addEventListener("click", () => __awaiter(void 0, void 0, void 0, fu
   a div about the specific user**/
 const inputSearcher = document.querySelector(".searchBar");
 const submitSearch = document.querySelector('.searchBtn');
+/***Cool effect on my Submit search Btn***/
 const fetchSearchUser = (name) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield fetch("http://localhost:3000/api/post/search", {

@@ -96,13 +96,14 @@ const displayPost = (post: Post) => {
   allPosts.insertAdjacentHTML('beforeend', postTemplate);
 
   const deleteP = document.querySelector(`#${postId} .deleteP`) as HTMLParagraphElement;
+  const yes = document.createElement("p") as HTMLParagraphElement;
+  const no = document.createElement("p") as HTMLParagraphElement;
+  const yesOrNo = document.createElement("div") as HTMLDivElement;
   if (deleteP) {
     deleteP.addEventListener('click', async () => {
-      const yesOrNo = document.createElement("div") as HTMLDivElement;
       yesOrNo.id = "yesOrNo";
       yesOrNo.innerText = "Are you sure you want to remove this post?";
-      const yes = document.createElement("p") as HTMLParagraphElement;
-      const no = document.createElement("p") as HTMLParagraphElement;
+
       yes.innerText = "yes";
       no.innerText = "no";
       yesOrNo.append(yes, no);
