@@ -167,6 +167,9 @@ await getAllPosts();
 
 const inputSearcher = document.querySelector(".searchBar") as HTMLInputElement;
 const submitSearch = document.querySelector('.searchBtn') as HTMLButtonElement;
+
+/***Cool effect on my Submit search Btn***/
+
 const fetchSearchUser = async (name:string):Promise <Post[] |void> => {
   try {
     const response = await fetch("http://localhost:3000/api/post/search", {
