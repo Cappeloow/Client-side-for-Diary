@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const sideBar = document.querySelector(".sidebar");
 const refreshIcon = document.querySelector("#refreshIcon");
 const startingPhrase = () => {
@@ -52,8 +53,6 @@ const createPostsToDatabase = () => __awaiter(void 0, void 0, void 0, function* 
         contentInput.value = "";
         console.log(data);
         yield getAllPosts();
-        // window.location.href ="mystory.html"; //fattar inte varför inte getAllPosts inte funkar tho.
-        // console.log('getAllPosts called');
         if (!response.ok) {
             throw new Error('Request failed');
         }
@@ -152,3 +151,7 @@ submitSearch.addEventListener("click", () => __awaiter(void 0, void 0, void 0, f
         displayPost(post);
     });
 }));
+//fetch the delete post,
+// we need to check if it's the users posts, if it is the users post create a icon X
+// if clicked on the x, we need to give the users name + the posts that we want to remove.
+//

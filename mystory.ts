@@ -1,13 +1,8 @@
 const sideBar = document.querySelector(".sidebar") as HTMLDivElement;
 const refreshIcon = document.querySelector("#refreshIcon") as HTMLHeadElement;
+import { User, Post  } from "./interfacesntypes";
 
 
-type User ={
-  _id:string,
-  username:string,
-  isAdmin:string,
-  name:string
-}
 
 const startingPhrase = ():User |undefined=> {
   let user = localStorage.getItem("user");
@@ -54,8 +49,6 @@ const createPostsToDatabase = async () => {
     contentInput.value="";
     console.log(data);
     await getAllPosts();
-    // window.location.href ="mystory.html"; //fattar inte varför inte getAllPosts inte funkar tho.
-    // console.log('getAllPosts called');
     if (!response.ok) {
       throw new Error('Request failed');
     }
@@ -65,11 +58,7 @@ const createPostsToDatabase = async () => {
 }
 submitPost.addEventListener("click",createPostsToDatabase);
 
-type Post = {
-  content:string,
-  user:string,
-  title:string
-}
+
 const allPosts = document.querySelector(".allPosts") as HTMLDivElement;
 
 
@@ -171,5 +160,10 @@ submitSearch.addEventListener("click", async () => {
 
 
 
+
+//fetch the delete post,
+// we need to check if it's the users posts, if it is the users post create a icon X
+// if clicked on the x, we need to give the users name + the posts that we want to remove.
+//
 
 
