@@ -1,6 +1,12 @@
 const sideBar = document.querySelector(".sidebar") as HTMLDivElement;
 const refreshIcon = document.querySelector("#refreshIcon") as HTMLHeadElement;
 // import { User, Post  } from "./interfacesntypes";
+const createANewPostText = document.querySelector('#createANewPost') as HTMLHeadElement;
+const divForCreatePost = document.querySelector(".circleAroundInputs") as HTMLDivElement;
+createANewPostText.addEventListener("click", () => {
+  createANewPostText.style.display ="none";
+  divForCreatePost.style.display="flex";
+})
 
  type User ={
   _id:string,
@@ -61,6 +67,8 @@ const createPostsToDatabase = async () => {
     contentInput.value="";
     console.log(data);
     await getAllPosts();
+    createANewPostText.style.display ="block";
+    divForCreatePost.style.display="none";
     if (!response.ok) {
       throw new Error('Request failed');
     }
@@ -90,7 +98,7 @@ const displayPost = (post: Post) => {
   const deleteP = document.querySelector(`#${postId} .deleteP`) as HTMLParagraphElement;
   if (deleteP) {
     deleteP.addEventListener('click', async () => {
-      
+      fetchDeletePost(post)
     });
   }
   const usernameP = document.querySelector(`#${postId} .usernameP`);
@@ -186,10 +194,10 @@ submitSearch.addEventListener("click", async () => {
 // if clicked on the x, we need to give the users name + the posts that we want to remove.
 //
 
-const fetchDeletePost = async () => {
+const fetchDeletePost = async (post:Post) => {
   // we need to get the all the usersposts in an array
-  const usersPosts = await fetchSearchUser(LoggedUser!.name);
-  console.group(usersPosts);
+  // const usersPosts = await fetchSearchUser(LoggedUser!.name);
+  // console.group(usersPosts);
   try {
     const response = await fetch("http://localhost:3000/api/post/delete", {
       method: 'DELETE',
@@ -197,7 +205,8 @@ const fetchDeletePost = async () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user:LoggedUser!.name
+        user:LoggedUser!.name,
+        _id:post
       })
     });
     const data = await response.json();
@@ -205,6 +214,7 @@ const fetchDeletePost = async () => {
     if(!data){
       return;
     }
+    await getAllPosts();
     return data;
   } catch (error:any) {
     console.log(error);

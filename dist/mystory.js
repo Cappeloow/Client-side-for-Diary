@@ -10,6 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const sideBar = document.querySelector(".sidebar");
 const refreshIcon = document.querySelector("#refreshIcon");
+// import { User, Post  } from "./interfacesntypes";
+const createANewPostText = document.querySelector('#createANewPost');
+const divForCreatePost = document.querySelector(".circleAroundInputs");
+createANewPostText.addEventListener("click", () => {
+    createANewPostText.style.display = "none";
+    divForCreatePost.style.display = "flex";
+});
 const startingPhrase = () => {
     let user = localStorage.getItem("user");
     if (user !== null) {
@@ -52,6 +59,8 @@ const createPostsToDatabase = () => __awaiter(void 0, void 0, void 0, function* 
         contentInput.value = "";
         console.log(data);
         yield getAllPosts();
+        createANewPostText.style.display = "block";
+        divForCreatePost.style.display = "none";
         if (!response.ok) {
             throw new Error('Request failed');
         }
@@ -76,6 +85,7 @@ const displayPost = (post) => {
     const deleteP = document.querySelector(`#${postId} .deleteP`);
     if (deleteP) {
         deleteP.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
+            fetchDeletePost(post);
         }));
     }
     const usernameP = document.querySelector(`#${postId} .usernameP`);
@@ -159,10 +169,10 @@ submitSearch.addEventListener("click", () => __awaiter(void 0, void 0, void 0, f
 // we need to check if it's the users posts, if it is the users post create a icon X
 // if clicked on the x, we need to give the users name + the posts that we want to remove.
 //
-const fetchDeletePost = () => __awaiter(void 0, void 0, void 0, function* () {
+const fetchDeletePost = (post) => __awaiter(void 0, void 0, void 0, function* () {
     // we need to get the all the usersposts in an array
-    const usersPosts = yield fetchSearchUser(LoggedUser.name);
-    console.group(usersPosts);
+    // const usersPosts = await fetchSearchUser(LoggedUser!.name);
+    // console.group(usersPosts);
     try {
         const response = yield fetch("http://localhost:3000/api/post/delete", {
             method: 'DELETE',
@@ -170,7 +180,8 @@ const fetchDeletePost = () => __awaiter(void 0, void 0, void 0, function* () {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                user: LoggedUser.name
+                user: LoggedUser.name,
+                _id: post
             })
         });
         const data = yield response.json();
@@ -178,6 +189,7 @@ const fetchDeletePost = () => __awaiter(void 0, void 0, void 0, function* () {
         if (!data) {
             return;
         }
+        yield getAllPosts();
         return data;
     }
     catch (error) {
