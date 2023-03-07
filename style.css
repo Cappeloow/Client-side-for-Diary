@@ -192,10 +192,17 @@ border-top:1px solid black;
     display:Flex;
     align-items: center;
     justify-content: center;
+    background-color:rgba(0, 0, 0, 0.03);
 }
 #createANewPost {
     box-shadow:2px 2px 4px 4px black;
     padding:20px;
+    letter-spacing: 10px;
+}
+#createANewPost:hover {
+    background-color: rgb(255, 255, 255);
+    cursor:pointer;
+    transition:1s;
 }
 .containerOfInputs > .circleAroundInputs {
     width:80%;
@@ -278,6 +285,7 @@ border-top:1px solid black;
         border-right:none;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
+        cursor:pointer;
     }
 
     .containerOfSearch > button:hover {
