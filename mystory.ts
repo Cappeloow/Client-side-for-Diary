@@ -1,8 +1,20 @@
 const sideBar = document.querySelector(".sidebar") as HTMLDivElement;
 const refreshIcon = document.querySelector("#refreshIcon") as HTMLHeadElement;
-import { User, Post  } from "./interfacesntypes";
+// import { User, Post  } from "./interfacesntypes";
+
+ type User ={
+  _id:string,
+  username:string,
+  isAdmin:string,
+  name:string
+}
 
 
+ type Post = {
+  content:string,
+  user:string,
+  title:string
+}
 
 const startingPhrase = ():User |undefined=> {
   let user = localStorage.getItem("user");
