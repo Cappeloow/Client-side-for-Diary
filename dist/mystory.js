@@ -65,13 +65,19 @@ const allPosts = document.querySelector(".allPosts");
 const displayPost = (post) => {
     const postId = `post-${Math.random().toString(36).substring(7)}`;
     const postTemplate = `
-    <div class="post" id="${postId}">
+    <div class="PostDiv" id="${postId}">
+      ${post.user === LoggedUser.name ? '<p class="deleteP">X</p>' : ''}
       <h3>${post.title}</h3>
       <p class="usernameP">@${post.user}</p>
       <p class="contentP">${post.content}</p>
     </div>
   `;
     allPosts.insertAdjacentHTML('beforeend', postTemplate);
+    const deleteP = document.querySelector(`#${postId} .deleteP`);
+    if (deleteP) {
+        deleteP.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
+        }));
+    }
     const usernameP = document.querySelector(`#${postId} .usernameP`);
     if (usernameP) {
         usernameP.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
@@ -130,7 +136,6 @@ const fetchSearchUser = (name) => __awaiter(void 0, void 0, void 0, function* ()
             })
         });
         const data = yield response.json();
-        console.group(data);
         if (!data) {
             return;
         }
@@ -154,3 +159,28 @@ submitSearch.addEventListener("click", () => __awaiter(void 0, void 0, void 0, f
 // we need to check if it's the users posts, if it is the users post create a icon X
 // if clicked on the x, we need to give the users name + the posts that we want to remove.
 //
+const fetchDeletePost = () => __awaiter(void 0, void 0, void 0, function* () {
+    // we need to get the all the usersposts in an array
+    const usersPosts = yield fetchSearchUser(LoggedUser.name);
+    console.group(usersPosts);
+    try {
+        const response = yield fetch("http://localhost:3000/api/post/delete", {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: LoggedUser.name
+            })
+        });
+        const data = yield response.json();
+        console.group(data);
+        if (!data) {
+            return;
+        }
+        return data;
+    }
+    catch (error) {
+        console.log(error);
+    }
+});

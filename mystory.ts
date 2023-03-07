@@ -77,14 +77,22 @@ const allPosts = document.querySelector(".allPosts") as HTMLDivElement;
 const displayPost = (post: Post) => {
   const postId = `post-${Math.random().toString(36).substring(7)}`;
   const postTemplate = `
-    <div class="post" id="${postId}">
+    <div class="PostDiv" id="${postId}">
+      ${post.user === LoggedUser!.name ? '<p class="deleteP">X</p>' : ''}
       <h3>${post.title}</h3>
       <p class="usernameP">@${post.user}</p>
       <p class="contentP">${post.content}</p>
     </div>
   `;
+
   allPosts.insertAdjacentHTML('beforeend', postTemplate);
 
+  const deleteP = document.querySelector(`#${postId} .deleteP`) as HTMLParagraphElement;
+  if (deleteP) {
+    deleteP.addEventListener('click', async () => {
+      
+    });
+  }
   const usernameP = document.querySelector(`#${postId} .usernameP`);
   if (usernameP) {
     usernameP.addEventListener('click', async () => {
@@ -98,6 +106,7 @@ const displayPost = (post: Post) => {
       });
     });
   }
+
 };
 
 /***************FETCH ALL USER POSTS*********************/
@@ -148,7 +157,6 @@ const fetchSearchUser = async (name:string):Promise <Post[] |void> => {
       })
     });
     const data = await response.json();
-    console.group(data);
     if(!data){
       return;
     }
@@ -178,4 +186,28 @@ submitSearch.addEventListener("click", async () => {
 // if clicked on the x, we need to give the users name + the posts that we want to remove.
 //
 
+const fetchDeletePost = async () => {
+  // we need to get the all the usersposts in an array
+  const usersPosts = await fetchSearchUser(LoggedUser!.name);
+  console.group(usersPosts);
+  try {
+    const response = await fetch("http://localhost:3000/api/post/delete", {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user:LoggedUser!.name
+      })
+    });
+    const data = await response.json();
+    console.group(data);
+    if(!data){
+      return;
+    }
+    return data;
+  } catch (error:any) {
+    console.log(error);
+  }
+}
 
