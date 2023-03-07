@@ -85,7 +85,21 @@ const displayPost = (post) => {
     const deleteP = document.querySelector(`#${postId} .deleteP`);
     if (deleteP) {
         deleteP.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
-            fetchDeletePost(post);
+            const yesOrNo = document.createElement("div");
+            yesOrNo.id = "yesOrNo";
+            yesOrNo.innerText = "Are you sure you want to remove this post?";
+            const yes = document.createElement("p");
+            const no = document.createElement("p");
+            yes.innerText = "yes";
+            no.innerText = "no";
+            yesOrNo.append(yes, no);
+            deleteP.append(yesOrNo);
+            yes.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+                yield fetchDeletePost(post);
+            }));
+            no.addEventListener("click", () => {
+                yesOrNo.remove();
+            });
         }));
     }
     const usernameP = document.querySelector(`#${postId} .usernameP`);

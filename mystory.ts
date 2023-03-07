@@ -98,7 +98,21 @@ const displayPost = (post: Post) => {
   const deleteP = document.querySelector(`#${postId} .deleteP`) as HTMLParagraphElement;
   if (deleteP) {
     deleteP.addEventListener('click', async () => {
-      fetchDeletePost(post)
+      const yesOrNo = document.createElement("div") as HTMLDivElement;
+      yesOrNo.id = "yesOrNo";
+      yesOrNo.innerText = "Are you sure you want to remove this post?";
+      const yes = document.createElement("p") as HTMLParagraphElement;
+      const no = document.createElement("p") as HTMLParagraphElement;
+      yes.innerText = "yes";
+      no.innerText = "no";
+      yesOrNo.append(yes, no);
+      deleteP.append(yesOrNo);
+      yes.addEventListener("click", async () => {
+        await fetchDeletePost(post);
+      });
+      no.addEventListener("click", () => {
+        yesOrNo.remove();
+      });
     });
   }
   const usernameP = document.querySelector(`#${postId} .usernameP`);
