@@ -94,12 +94,10 @@ const createPostsToDatabase = () => __awaiter(void 0, void 0, void 0, function* 
 submitPost.addEventListener("click", createPostsToDatabase);
 const allPosts = document.querySelector(".allPosts");
 const displayPost = (post) => {
-    var _a;
-    console.log(post.likes);
-    post.likes = (_a = post.likes) !== null && _a !== void 0 ? _a : 0;
     const postId = `post-${Math.random().toString(36).substring(7)}`;
+    //egentligen kan vi byta postId till den som mongoose ger oss för varje post.
     const postTemplate = `
-    <div class="PostDiv" id="${postId}">
+    <div class="PostDiv" id="${postId}"> 
       <div id="wrapper">
         <div class="profilePicture"><span class="material-symbols-outlined">face</span>
         </div>
@@ -109,11 +107,18 @@ const displayPost = (post) => {
       </div>
       <h3>${post.title}</h3>
       <p class="contentP">${post.content}</p>
-      <p class="likesP">0</p>
-      <button id="thumbsup">Up</button>
+      <p class="likesP">${post.likes}</p>
+      <button class="thumbsup">Up</button>
     </div>
   `;
     allPosts.insertAdjacentHTML('beforeend', postTemplate);
+    const LikeButton = document.querySelector(`#${postId} .thumbsup `);
+    if (LikeButton) {
+        LikeButton.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+            console.log("click", post);
+            yield LikeThePost(post);
+        }));
+    }
     const profilePicture = document.querySelector(`#${postId} .profilePicture`);
     profilePicture.style.backgroundColor = post.backgroundColor;
     const deleteP = document.querySelector(`#${postId} .deleteP`);
@@ -258,11 +263,10 @@ const LikeThePost = (post) => __awaiter(void 0, void 0, void 0, function* () {
             },
             body: JSON.stringify({
                 user: LoggedUser.name,
-                _id: post
+                _id: post._id
             })
         });
         const data = yield response.json();
-        console.group(data);
         if (!data) {
             return;
         }

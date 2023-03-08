@@ -32,11 +32,12 @@ createANewPostText.addEventListener("click", () => {
 
 
  type Post = {
-  likes: number;
+  _id: any;
+  likes: number | string;
   backgroundColor: string;
   content:string,
   user:string,
-  title:string | string,
+  title:string,
 }
 const randomColor = ():string => {
   const hexChars = '0123456789abcdef';
@@ -110,11 +111,11 @@ const allPosts = document.querySelector(".allPosts") as HTMLDivElement;
 
 
 const displayPost = (post: Post) => {
-  console.log(post.likes);
-  post.likes = post.likes ?? 0;
   const postId = `post-${Math.random().toString(36).substring(7)}`;
+
+  //egentligen kan vi byta postId till den som mongoose ger oss för varje post.
   const postTemplate = `
-    <div class="PostDiv" id="${postId}">
+    <div class="PostDiv" id="${postId}"> 
       <div id="wrapper">
         <div class="profilePicture"><span class="material-symbols-outlined">face</span>
         </div>
@@ -124,14 +125,20 @@ const displayPost = (post: Post) => {
       </div>
       <h3>${post.title}</h3>
       <p class="contentP">${post.content}</p>
-      <p class="likesP">0</p>
-      <button id="thumbsup">Up</button>
+      <p class="likesP">${post.likes}</p>
+      <button class="thumbsup">Up</button>
     </div>
   `;
 
 
   allPosts.insertAdjacentHTML('beforeend', postTemplate);
-  
+  const LikeButton = document.querySelector(`#${postId} .thumbsup `) as HTMLButtonElement;
+if(LikeButton){
+  LikeButton.addEventListener("click", async () => {
+    console.log("click", post);
+    await LikeThePost(post);
+  })
+}
 
   
   const profilePicture = document.querySelector(`#${postId} .profilePicture`) as HTMLDivElement;
@@ -295,11 +302,10 @@ const LikeThePost = async (post:Post) => {
       },
       body: JSON.stringify({
         user:LoggedUser!.name,
-        _id:post
+        _id:post._id
       })
     });
     const data = await response.json();
-    console.group(data);
     if(!data){
       return;
     }
