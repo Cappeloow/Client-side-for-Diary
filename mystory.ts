@@ -32,10 +32,11 @@ createANewPostText.addEventListener("click", () => {
 
 
  type Post = {
+  likes: number;
   backgroundColor: string;
   content:string,
   user:string,
-  title:string
+  title:string | string,
 }
 const randomColor = ():string => {
   const hexChars = '0123456789abcdef';
@@ -109,6 +110,8 @@ const allPosts = document.querySelector(".allPosts") as HTMLDivElement;
 
 
 const displayPost = (post: Post) => {
+  console.log(post.likes);
+  post.likes = post.likes ?? 0;
   const postId = `post-${Math.random().toString(36).substring(7)}`;
   const postTemplate = `
     <div class="PostDiv" id="${postId}">
@@ -121,10 +124,16 @@ const displayPost = (post: Post) => {
       </div>
       <h3>${post.title}</h3>
       <p class="contentP">${post.content}</p>
+      <p class="likesP">0</p>
+      <button id="thumbsup">Up</button>
     </div>
   `;
 
+
   allPosts.insertAdjacentHTML('beforeend', postTemplate);
+  
+
+  
   const profilePicture = document.querySelector(`#${postId} .profilePicture`) as HTMLDivElement;
   profilePicture.style.backgroundColor = post.backgroundColor;
 
@@ -275,3 +284,28 @@ const fetchDeletePost = async (post:Post) => {
   }
 }
 
+/************LIKING FETCH************/
+
+const LikeThePost = async (post:Post) => {
+  try {
+    const response = await fetch("http://localhost:3000/api/post/like", {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user:LoggedUser!.name,
+        _id:post
+      })
+    });
+    const data = await response.json();
+    console.group(data);
+    if(!data){
+      return;
+    }
+    await getAllPosts();
+    return data;
+  } catch (error:any) {
+    console.log(error);
+  }
+}

@@ -94,6 +94,9 @@ const createPostsToDatabase = () => __awaiter(void 0, void 0, void 0, function* 
 submitPost.addEventListener("click", createPostsToDatabase);
 const allPosts = document.querySelector(".allPosts");
 const displayPost = (post) => {
+    var _a;
+    console.log(post.likes);
+    post.likes = (_a = post.likes) !== null && _a !== void 0 ? _a : 0;
     const postId = `post-${Math.random().toString(36).substring(7)}`;
     const postTemplate = `
     <div class="PostDiv" id="${postId}">
@@ -106,6 +109,8 @@ const displayPost = (post) => {
       </div>
       <h3>${post.title}</h3>
       <p class="contentP">${post.content}</p>
+      <p class="likesP">0</p>
+      <button id="thumbsup">Up</button>
     </div>
   `;
     allPosts.insertAdjacentHTML('beforeend', postTemplate);
@@ -223,6 +228,31 @@ const fetchDeletePost = (post) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const response = yield fetch("http://localhost:3000/api/post/delete", {
             method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: LoggedUser.name,
+                _id: post
+            })
+        });
+        const data = yield response.json();
+        console.group(data);
+        if (!data) {
+            return;
+        }
+        yield getAllPosts();
+        return data;
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+/************LIKING FETCH************/
+const LikeThePost = (post) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield fetch("http://localhost:3000/api/post/like", {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
