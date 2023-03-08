@@ -13,9 +13,23 @@ const refreshIcon = document.querySelector("#refreshIcon");
 // import { User, Post  } from "./interfacesntypes";
 const createANewPostText = document.querySelector('#createANewPost');
 const divForCreatePost = document.querySelector(".circleAroundInputs");
+const inputTitle = document.querySelector('.titleInput');
+const inputContent = document.querySelector('.contentInput');
+/***********SMOOTHER EFFECT WHEN CLICKED*******/
 createANewPostText.addEventListener("click", () => {
     createANewPostText.style.display = "none";
-    divForCreatePost.style.display = "flex";
+    let interval1 = setInterval(function () {
+        divForCreatePost.style.display = "flex";
+        divForCreatePost.style.opacity = "0.2";
+    }, 50);
+    let interval2 = setInterval(function () {
+        divForCreatePost.style.opacity = "1";
+        inputTitle.style.opacity = "1";
+    }, 300);
+    setTimeout(function () {
+        clearInterval(interval1);
+        clearInterval(interval2);
+    }, 300);
 });
 const randomColor = () => {
     const hexChars = '0123456789abcdef';
@@ -31,7 +45,7 @@ const startingPhrase = () => {
         let parsedUser = JSON.parse(user);
         const paragraphWelcomeUser = document.createElement("p");
         parsedUser.name = parsedUser.username.split('@')[0];
-        paragraphWelcomeUser.innerText = `logged in as: ${parsedUser.name}`;
+        paragraphWelcomeUser.innerText = `logged in as: ${parsedUser.name} `;
         sideBar.appendChild(paragraphWelcomeUser);
         return parsedUser;
     }
@@ -84,8 +98,10 @@ const displayPost = (post) => {
     const postTemplate = `
     <div class="PostDiv" id="${postId}">
       <div id="wrapper">
-        <div class="profilePicture"></div>
-        <p class="usernameP">@${post.user}</p>
+        <div class="profilePicture"><span class="material-symbols-outlined">face</span>
+        </div>
+        <p class="usernameP">@${post.user}
+        </p>
         ${post.user === LoggedUser.name ? '<p class="deleteP">X</p>' : ''}
       </div>
       <h3>${post.title}</h3>
