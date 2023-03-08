@@ -160,7 +160,7 @@ align-items: center;
 .containerOfPosts > .sidebar {
 width:20%;
 height:100%;
-border-right:1px solid black;
+border-right:1px solid rgb(198, 224, 225);
 border-top:1px solid black;
 position:fixed;
 left:0;
@@ -185,7 +185,7 @@ left:0;
 .containerOfPosts > .posts {
 width:60%;
 height:100%;
-border-top:1px solid black;
+border-top:1px solid rgb(198, 224, 225);
 }
 
 /******CONTAINERS_INPUTS*****/
@@ -199,32 +199,67 @@ border-top:1px solid black;
     background-color:#eff0f3
 }
 #createANewPost {
-    box-shadow:2px 2px 4px 4px black;
-    padding:20px;
-    letter-spacing: 10px;
-    background-color: #ff8e3c;
+         display: inline-block;
+        background-color: #335234;
+        color: white;
+        border-radius: 10px;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.837);
+        cursor: pointer;
+        transition:1s;
 }
 #createANewPost:hover {
-    background-color: #ff8d3cc4;
+    background-color: #a7a3a0c4;
     cursor:pointer;
     transition:1s;
 }
 .containerOfInputs > .circleAroundInputs {
     width:80%;
     height:100%;
-    padding:10px;
-    background-color: rgb(252, 252, 252);
     display:none;
     gap:20px;
     flex-direction: column;
     align-items: center;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
+.containerOfInputs > .circleAroundInputs:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  }
+
 .containerOfInputs > .circleAroundInputs > .submitPost {
-    width:100px;
-    height:30px;
-    letter-spacing: 3px;
-    border-color: aliceblue;
+        display: inline-block;
+        background-color: #335234;
+        color: white;
+        border-radius: 10px;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.837);
+        cursor: pointer;
+        transition:1s;
 }
+.containerOfInputs > .circleAroundInputs > .submitPost:hover {
+    background-color: #3f922e;
+    transition:1s;
+  }
+  
+  .submitPost:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+  }
 .containerOfInputs > .circleAroundInputs > .submitPost:hover {
     border-color: rgb(159, 199, 206);
 }
@@ -243,6 +278,7 @@ border-top:1px solid black;
     resize: none;
     border-top-right-radius: 10px;
     border-color: rgb(166, 186, 204);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.837);
 }
 
 
@@ -251,8 +287,8 @@ border-top:1px solid black;
 .containerOfPosts > .news {
     width:20%;
     height:100%;
-    border-left:1px solid black;
-    border-top:1px solid black;
+    border-left:1px solid rgb(198, 224, 225);
+    border-top:1px solid rgb(198, 224, 225);
     position:fixed;
     right:0;
     display:flex;
@@ -272,7 +308,7 @@ border-top:1px solid black;
         color:#0d0d0d;
         padding:10px;
         opacity: 0.8;
-        border-top:1px solid black;
+        border-top:1px solid rgb(198, 224, 225);
         padding-top:20px;
     }
 
@@ -281,14 +317,14 @@ border-top:1px solid black;
         width:80%;
         height:10px;
         align-items: center;
-        border:2px solid #ff8e3c;
+        border:1px solid rgb(198, 224, 225);
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
     }
     .containerOfSearch > button {
         width:20px;
         height:44px;
-        border:2px solid #ff8e3c;
+        border:1px solid rgb(198, 224, 225);
         border-right:none;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
@@ -314,6 +350,7 @@ border-top:1px solid black;
     border: 1px solid rgb(194, 224, 237);
     padding:20px;
     margin:20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -334,7 +371,7 @@ border-top:1px solid black;
 }
 #wrapper > .usernameP {
     font-size:20px;
-    font-style: oblique;
+    padding-left:2px;
 }
 #wrapper > .usernameP:hover {
     color:rgba(7, 20, 20, 0.562);
