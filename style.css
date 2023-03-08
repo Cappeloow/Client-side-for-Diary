@@ -315,30 +315,46 @@ border-top:1px solid black;
     padding:20px;
     margin:20px;
 }
-.PostDiv:hover {
-    border: 1px solid rgb(151, 178, 189); 
-    background-color: white;
+
+
+#wrapper{
+    width:100%;
+    display:flex;
+    flex-direction: row;
 }
-.PostDiv > .deleteP {
+#wrapper > .profilePicture {
+    width:30px;
+    height:30px;
+    border-radius:50%;
+}
+#wrapper > .deleteP {
     cursor:pointer;
     font-size:20px;
+    margin-left:auto;
+}
+#wrapper > .usernameP {
+    font-size:20px;
+    font-style: oblique;
+}
+#wrapper > .usernameP:hover {
+    color:rgba(7, 20, 20, 0.562);
+    cursor:pointer
 }
 .deleteP:hover{
     color:rgba(2, 1, 0, 0.656);
 }
+.PostDiv:hover {
+    border: 1px solid rgb(151, 178, 189); 
+    background-color: white;
+}
+
+
 .PostDiv > h3 {
 font-size:25px;
 text-align: center;
 padding:20px;
 }
-.PostDiv > .usernameP {
-    font-size:12px;
-    font-style: oblique;
-}
-.PostDiv > .usernameP:hover {
-    color:rgba(7, 20, 20, 0.562);
-    cursor:pointer
-}
+
 .PostDiv > .contentP {
     font-size:15px;
     padding:20px;

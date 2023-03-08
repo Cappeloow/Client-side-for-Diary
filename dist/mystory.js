@@ -17,6 +17,14 @@ createANewPostText.addEventListener("click", () => {
     createANewPostText.style.display = "none";
     divForCreatePost.style.display = "flex";
 });
+const randomColor = () => {
+    const hexChars = '0123456789abcdef';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += hexChars[Math.floor(Math.random() * hexChars.length)];
+    }
+    return color;
+};
 const startingPhrase = () => {
     let user = localStorage.getItem("user");
     if (user !== null) {
@@ -75,13 +83,18 @@ const displayPost = (post) => {
     const postId = `post-${Math.random().toString(36).substring(7)}`;
     const postTemplate = `
     <div class="PostDiv" id="${postId}">
-      ${post.user === LoggedUser.name ? '<p class="deleteP">X</p>' : ''}
+      <div id="wrapper">
+        <div class="profilePicture"></div>
+        <p class="usernameP">@${post.user}</p>
+        ${post.user === LoggedUser.name ? '<p class="deleteP">X</p>' : ''}
+      </div>
       <h3>${post.title}</h3>
-      <p class="usernameP">@${post.user}</p>
       <p class="contentP">${post.content}</p>
     </div>
   `;
     allPosts.insertAdjacentHTML('beforeend', postTemplate);
+    const profilePicture = document.querySelector(`#${postId} .profilePicture`);
+    profilePicture.style.backgroundColor = post.backgroundColor;
     const deleteP = document.querySelector(`#${postId} .deleteP`);
     const yes = document.createElement("p");
     const no = document.createElement("p");
@@ -136,9 +149,12 @@ const getAllPosts = () => __awaiter(void 0, void 0, void 0, function* () {
 getAllPosts();
 const sortArrayByDate = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const sortedData = data.sort((a, b) => a.lastActiveAt - b.lastActiveAt);
-    console.log(data);
-    sortedData.reverse();
-    return sortedData;
+    const modifiedData = sortedData.map(post => {
+        return Object.assign(Object.assign({}, post), { backgroundColor: randomColor() });
+    });
+    console.log(modifiedData);
+    modifiedData.reverse();
+    return modifiedData;
 });
 refreshIcon.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
     yield getAllPosts();

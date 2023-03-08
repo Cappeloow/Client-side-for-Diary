@@ -9,6 +9,7 @@ createANewPostText.addEventListener("click", () => {
 })
 
  type User ={
+  backgroundColor: string;
   _id:string,
   username:string,
   isAdmin:string,
@@ -17,11 +18,21 @@ createANewPostText.addEventListener("click", () => {
 
 
  type Post = {
+  backgroundColor: string;
   content:string,
   user:string,
   title:string
 }
+const randomColor = ():string => {
+  const hexChars = '0123456789abcdef';
+  let color = '#';
 
+  for (let i = 0; i < 6; i++) {
+    color += hexChars[Math.floor(Math.random() * hexChars.length)];
+  }
+
+  return color;
+}
 const startingPhrase = ():User |undefined=> {
   let user = localStorage.getItem("user");
     if (user !== null) {
@@ -82,18 +93,24 @@ submitPost.addEventListener("click",createPostsToDatabase);
 const allPosts = document.querySelector(".allPosts") as HTMLDivElement;
 
 
+
 const displayPost = (post: Post) => {
   const postId = `post-${Math.random().toString(36).substring(7)}`;
   const postTemplate = `
     <div class="PostDiv" id="${postId}">
-      ${post.user === LoggedUser!.name ? '<p class="deleteP">X</p>' : ''}
+      <div id="wrapper">
+        <div class="profilePicture"></div>
+        <p class="usernameP">@${post.user}</p>
+        ${post.user === LoggedUser!.name ? '<p class="deleteP">X</p>' : ''}
+      </div>
       <h3>${post.title}</h3>
-      <p class="usernameP">@${post.user}</p>
       <p class="contentP">${post.content}</p>
     </div>
   `;
 
   allPosts.insertAdjacentHTML('beforeend', postTemplate);
+  const profilePicture = document.querySelector(`#${postId} .profilePicture`) as HTMLDivElement;
+  profilePicture.style.backgroundColor = post.backgroundColor;
 
   const deleteP = document.querySelector(`#${postId} .deleteP`) as HTMLParagraphElement;
   const yes = document.createElement("p") as HTMLParagraphElement;
@@ -151,12 +168,15 @@ const getAllPosts = async () => {
 };
 getAllPosts();
 
-const sortArrayByDate = async (data: any[]):Promise<Post[]> => {
-const sortedData =data.sort((a: { lastActiveAt: number; }, b: { lastActiveAt: number; }) => a.lastActiveAt - b.lastActiveAt);
-console.log(data);
-sortedData.reverse();
-return sortedData;
-}
+const sortArrayByDate = async (data: any[]): Promise<Post[]> => {
+  const sortedData = data.sort((a: { lastActiveAt: number }, b: { lastActiveAt: number }) => a.lastActiveAt - b.lastActiveAt);
+  const modifiedData = sortedData.map(post => {
+    return {...post, backgroundColor: randomColor()};
+  });
+  console.log(modifiedData);
+  modifiedData.reverse();
+  return modifiedData;
+};
 
 refreshIcon.addEventListener("click", async () => {
 
