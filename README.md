@@ -2,14 +2,15 @@
 
 
 ## Login Page
-
 <img width="1120" alt="image" src="https://user-images.githubusercontent.com/98847274/224055036-2cbe84e0-a389-4896-9cd6-f77de223cb11.png">
 
+## Register a new User
+<img width="1118" alt="image" src="https://user-images.githubusercontent.com/98847274/224122443-ac0a4d9e-2968-4a6b-aa90-4e9dfe40147c.png">
+
 ## Diary Page
-
-<img width="1142" alt="image" src="https://user-images.githubusercontent.com/98847274/224056124-4588eb0a-81ef-4b0e-b13f-e129aea457f7.png">
-
+<img width="1117" alt="image" src="https://user-images.githubusercontent.com/98847274/224121933-952ab35f-8636-4515-8107-c31426eb0890.png">
 
 ### Create a post
-
 <img width="1262" alt="image" src="https://user-images.githubusercontent.com/98847274/224056475-c895368a-fbee-471b-9403-d154f3c09b70.png">
+
+
