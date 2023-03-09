@@ -51,11 +51,10 @@ const startingPhrase = () => {
     }
     else {
         window.location.href = "index.html";
-        return undefined;
+        throw new Error("User is not logged in"); // Throw an error if the user is not logged in
     }
 };
 const LoggedUser = startingPhrase();
-console.log(LoggedUser);
 const contentInput = document.querySelector(".contentInput");
 const titleInput = document.querySelector(".titleInput");
 const submitPost = document.querySelector(".submitPost");
@@ -107,16 +106,20 @@ const displayPost = (post) => {
       </div>
       <h3>${post.title}</h3>
       <p class="contentP">${post.content}</p>
-      <p class="likesP">${post.likes}</p>
-      <button class="thumbsup">Like <span class="material-symbols-outlined">Favorite</span></button>
+      <div class="thumbsup">${post.likes.length}<span id="heart" class="material-symbols-outlined">Favorite</span></div>
     </div>
   `;
     allPosts.insertAdjacentHTML('beforeend', postTemplate);
     const LikeButton = document.querySelector(`#${postId} .thumbsup `);
+    const Favorite = document.querySelector(`#heart`);
     if (LikeButton) {
         LikeButton.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
-            console.log("click", post);
             yield LikeThePost(post);
+            const isLikedByLoggedUser = post.likes.includes(LoggedUser.name);
+            console.log(LoggedUser.name);
+            console.log(post.likes);
+            console.log(isLikedByLoggedUser);
+            isLikedByLoggedUser ? Favorite.style.color = "red" : Favorite.style.color = "black";
         }));
     }
     const profilePicture = document.querySelector(`#${postId} .profilePicture`);

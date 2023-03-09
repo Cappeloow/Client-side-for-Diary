@@ -22,6 +22,7 @@ createANewPostText.addEventListener("click", () => {
     clearInterval(interval2);
   }, 300);
 })
+
  type User ={
   backgroundColor: string;
   _id:string,
@@ -33,7 +34,7 @@ createANewPostText.addEventListener("click", () => {
 
  type Post = {
   _id: any;
-  likes: number | string;
+  likes: string[];
   backgroundColor: string;
   content:string,
   user:string,
@@ -49,22 +50,22 @@ const randomColor = ():string => {
 
   return color;
 }
-const startingPhrase = ():User |undefined=> {
+const startingPhrase = ():User => {
   let user = localStorage.getItem("user");
-    if (user !== null) {
-      let parsedUser = JSON.parse(user);
-      const paragraphWelcomeUser = document.createElement("p") as HTMLParagraphElement;
-      parsedUser.name = parsedUser.username.split('@')[0];
-      paragraphWelcomeUser.innerText = `logged in as: ${parsedUser.name} `;
-      sideBar.appendChild(paragraphWelcomeUser);
-      return parsedUser;
-    } else {
-      window.location.href = "index.html";
-      return undefined;
-    }
+  if (user !== null) {
+    let parsedUser = JSON.parse(user);
+    const paragraphWelcomeUser = document.createElement("p") as HTMLParagraphElement;
+    parsedUser.name = parsedUser.username.split('@')[0];
+    paragraphWelcomeUser.innerText = `logged in as: ${parsedUser.name} `;
+    sideBar.appendChild(paragraphWelcomeUser);
+    return parsedUser;
+  } else {
+    window.location.href = "index.html";
+    throw new Error("User is not logged in"); // Throw an error if the user is not logged in
+  }
 }
-const LoggedUser:User | undefined= startingPhrase();
-console.log(LoggedUser);
+
+const LoggedUser: User = startingPhrase();
 
 const contentInput = document.querySelector(".contentInput") as HTMLInputElement;
 const titleInput = document.querySelector(".titleInput") as HTMLTextAreaElement;
@@ -125,25 +126,28 @@ const displayPost = (post: Post) => {
       </div>
       <h3>${post.title}</h3>
       <p class="contentP">${post.content}</p>
-      <p class="likesP">${post.likes}</p>
-      <button class="thumbsup">Like <span class="material-symbols-outlined">Favorite</span></button>
+      <div class="thumbsup">${post.likes.length}<span id="heart" class="material-symbols-outlined">Favorite</span></div>
     </div>
   `;
-
-
+  
+  
   allPosts.insertAdjacentHTML('beforeend', postTemplate);
   const LikeButton = document.querySelector(`#${postId} .thumbsup `) as HTMLButtonElement;
+  const Favorite = document.querySelector(`#heart`) as HTMLSpanElement;
 if(LikeButton){
   LikeButton.addEventListener("click", async () => {
-    console.log("click", post);
     await LikeThePost(post);
+    const isLikedByLoggedUser = post.likes.includes(LoggedUser.name)
+    console.log(LoggedUser.name);
+    console.log(post.likes);
+    console.log(isLikedByLoggedUser);
+    isLikedByLoggedUser ? Favorite.style.color ="red" : Favorite.style.color ="black";
   })
 }
 
   
   const profilePicture = document.querySelector(`#${postId} .profilePicture`) as HTMLDivElement;
   profilePicture.style.backgroundColor = post.backgroundColor;
-
   const deleteP = document.querySelector(`#${postId} .deleteP`) as HTMLParagraphElement;
   const yes = document.createElement("p") as HTMLParagraphElement;
   const no = document.createElement("p") as HTMLParagraphElement;
@@ -309,7 +313,7 @@ const LikeThePost = async (post:Post) => {
     if(!data){
       return;
     }
-    await getAllPosts();
+    await getAllPosts()
     return data;
   } catch (error:any) {
     console.log(error);

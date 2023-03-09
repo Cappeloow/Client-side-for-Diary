@@ -397,6 +397,17 @@ border-top:1px solid rgb(198, 224, 225);
     background-color: white;
 }
 
+.PostDiv > .thumbsup{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width:20px;
+}
+.thumbsup > #heart {
+    padding-left:3px;
+    cursor:pointer;
+}
+
 
 .PostDiv > h3 {
 font-size:25px;
