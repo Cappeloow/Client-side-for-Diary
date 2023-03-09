@@ -106,18 +106,20 @@ const displayPost = (post) => {
       </div>
       <h3>${post.title}</h3>
       <p class="contentP">${post.content}</p>
-      <div class="thumbsup">${post.likes.length}<span id="heart" class="material-symbols-outlined">Favorite</span></div>
+      <div class="thumbsup">${post.likes.length}<span class="material-symbols-outlined">Favorite</span></div>
     </div>
   `;
     allPosts.insertAdjacentHTML('beforeend', postTemplate);
     const LikeButton = document.querySelector(`#${postId} .thumbsup `);
-    const Favorite = document.querySelector(`#heart`);
+    const Favorite = document.querySelector(`#${postId} .thumbsup .material-icons-outlined`);
     if (LikeButton) {
         LikeButton.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+            console.log(document.querySelector(`#${postId} .thumbsup`));
             yield LikeThePost(post);
             const isLikedByLoggedUser = post.likes.includes(LoggedUser.name);
             console.log(LoggedUser.name);
             console.log(post.likes);
+            console.log(Favorite);
             console.log(isLikedByLoggedUser);
             isLikedByLoggedUser ? Favorite.style.color = "red" : Favorite.style.color = "black";
         }));

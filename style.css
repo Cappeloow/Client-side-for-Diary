@@ -403,7 +403,7 @@ border-top:1px solid rgb(198, 224, 225);
     justify-content: center;
     width:20px;
 }
-.thumbsup > #heart {
+.thumbsup > .material-symbols-outlined {
     padding-left:3px;
     cursor:pointer;
 }
