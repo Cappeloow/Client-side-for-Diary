@@ -108,7 +108,7 @@ const displayPost = (post) => {
       <h3>${post.title}</h3>
       <p class="contentP">${post.content}</p>
       <p class="likesP">${post.likes}</p>
-      <button class="thumbsup">Up</button>
+      <button class="thumbsup">Like <span class="material-symbols-outlined">Favorite</span></button>
     </div>
   `;
     allPosts.insertAdjacentHTML('beforeend', postTemplate);
